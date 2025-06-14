@@ -24,10 +24,14 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        role-to-assume: arn:aws:iam::682033471903:role/GithubActionsRole
+        role-session-name: GitHub_to_AWS_via_FederatedOIDC
         aws-region: eu-west-1
-        
+      # Hello from AWS: WhoAmI
+    - name: Sts GetCallerIdentity
+      run: |
+          aws sts get-caller-identity
+     
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
 #      with:
@@ -49,10 +53,14 @@ jobs:
       run: terraform plan -input=false
       working-directory: ./terraform
 
-    - name: Terraform Apply
+#    - name: Terraform Apply
   #    if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
-      working-directory: ./terraform
+  #    run: terraform apply -auto-approve -input=false
+  #    working-directory: ./terraform
 
+    - name: Terraform Destroy
+  #    if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      run: terraform destroy -auto-approve -input=false
+      working-directory: ./terraform
 
   
