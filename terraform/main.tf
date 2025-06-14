@@ -10,7 +10,7 @@ provider "aws" {
   region = var.regions
 }
 
-resource "aws_s3_bucket" "lab_1_bucket" {
+resource "aws_s3_bucket" "lab1-bucket" {
   bucket = "lab_1"
-  acl    = "private"
+  aws_s3_bucket_acl    = "private"
 }
