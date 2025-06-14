@@ -1,5 +1,4 @@
 name: 'Terraform Check Plan Apply for task1'
-
 on:
   push:
     branches:
