@@ -66,5 +66,3 @@ jobs:
   #    run: terraform destroy -auto-approve -input=false
   #    working-directory: ./terraform
 
-  
-Update github_actions.yml · mickey-key/rsschool-devops-course-tasks@cb9ac87 
