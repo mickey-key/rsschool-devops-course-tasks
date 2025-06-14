@@ -38,12 +38,21 @@ jobs:
       working-directory: ./terraform
 
     - name: Terraform Format
-      run: terraform fmt -check
+      run: terraform fmt
       working-directory: ./terraform
 
+    - name: Terraform Validate
+      run: terraform validate
+      working-directory: ./terraform
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
       working-directory: ./terraform
+
+    - name: Terraform Apply
+  #    if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      run: terraform apply -auto-approve -input=false
+      working-directory: ./terraform
+
 
   
