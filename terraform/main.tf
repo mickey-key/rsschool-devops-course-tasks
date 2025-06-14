@@ -10,7 +10,6 @@ provider "aws" {
   region = var.regions
 }
 
-resource "aws_s3_bucket" "task1-bucket" {
-  bucket = "lab_1"
-  aws_s3_bucket_acl    = "private"
+resource "aws_s3_bucket" "bucket" {
+  bucket = "rsschool-first-task-bucket"
 }
