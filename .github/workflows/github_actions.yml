@@ -1,4 +1,5 @@
-name: Terraform Check Plan Apply for Lab1 
+name: 'Terraform Check Plan Apply for task1'
+
 on:
   push:
     branches:
@@ -7,31 +8,42 @@ on:
     branches:
      - main
 jobs:
-  terraform-plan-output:
-    if: github.event_name == 'pull_request'
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: production
+
     defaults:
       run:
-        working-directory: terraform-example-deploy
-    name: Terraform
-    environment: production
-    runs-on: ubuntu-latest
+        shell: bash
+
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
+        
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+#      with:
+#        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
     - name: Terraform Init
-      id: init
-      run: terraform init 
+      run: terraform init
       working-directory: ./terraform
-         
-    - name: Terraform Fmt
-      id: fmt
+
+    - name: Terraform Format
       run: terraform fmt -check
       working-directory: ./terraform
- 
-    - name: Terraform Validate
-      id: validate
-      run: terraform validate -no-color
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan -input=false
       working-directory: ./terraform
-       
-    - name: Terraform Plan  
-      id: plan
-      run: terraform plan 
-     
+
+  
