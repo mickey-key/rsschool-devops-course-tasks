@@ -1,28 +1,3 @@
-
-Skip to content
-Navigation Menu
-mickey-key
-rsschool-devops-course-tasks
-
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-
-    Settings
-
-Terraform Check Plan Apply for task1
-Update github_actions.yml #12
-
-Jobs
-
-Run details
-
-Workflow file for this run
-.github/workflows/github_actions.yml at cb9ac87
 name: 'Terraform Check Plan Apply for task1'
 
 on:
