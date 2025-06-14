@@ -10,6 +10,6 @@ provider "aws" {
   region = var.regions
 }
 
-resource "aws_s3_bucket" "first-task-bucket" {
-  bucket = "lab_1"
+resource "aws_s3_bucket" "task1_bucket" {
+  bucket = "first-rsschool-task-bucket"
 }
