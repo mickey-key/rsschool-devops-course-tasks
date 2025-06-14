@@ -1,0 +1,37 @@
+name: Terraform Check Plan Apply for Lab1 
+on:
+  push:
+    branches:
+     - main
+  pull_request:
+    branches:
+     - main
+jobs:
+  terraform-plan-output:
+    if: github.event_name == 'pull_request'
+    defaults:
+      run:
+        working-directory: terraform-example-deploy
+    name: Terraform
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+    - name: Terraform Init
+      id: init
+      run: terraform init 
+      working-directory: ./terraform
+         
+    - name: Terraform Fmt
+      id: fmt
+      run: terraform fmt -check
+      working-directory: ./terraform
+ 
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+      working-directory: ./terraform
+       
+    - name: Terraform Plan  
+      id: plan
+      run: terraform plan 
+     
