@@ -45,7 +45,8 @@ jobs:
     - name: Sts GetCallerIdentity
       run: |
           aws sts get-caller-identity
-      
+    - name: Terraform Init
+      run: terraform init -input=false  
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
