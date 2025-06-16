@@ -46,7 +46,7 @@ jobs:
       run: |
           aws sts get-caller-identity
     - name: Terraform Init
-      run: terraform init -input=false  
+      run: terraform init
       working-directory: ./terraform
     # Generates an execution plan for Terraform
     - name: Terraform Plan
