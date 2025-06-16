@@ -32,7 +32,10 @@ jobs:
     environment: production
     permissions:
       id-token: write   
-      contents: read    
+      contents: read   
+    defaults:
+      run:
+        shell: bash
     steps:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -45,6 +48,12 @@ jobs:
     - name: Sts GetCallerIdentity
       run: |
           aws sts get-caller-identity
+  
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+#      with:
+#        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
     - name: Terraform Init
       run: terraform init
       working-directory: ./terraform
