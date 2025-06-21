@@ -1,4 +1,4 @@
-name: 'Terraform Check Plan Apply for task 2'
+name: 'Terraform workflow for task 2'
 
 on:
   push:
