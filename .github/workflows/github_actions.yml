@@ -63,7 +63,8 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: ./terraform
-      
+    - name: set variable
+      run: export TF_VAR_private_key_pem=${{ secrets.TF_VAR_private_key_pem }}
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
