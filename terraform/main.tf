@@ -4,12 +4,11 @@ terraform {
       source = "hashicorp/aws"
     }
   }
-}
 
-provider "aws" {
-  region = var.regions
-}
-
-resource "aws_s3_bucket" "bucket" {
-  bucket = "rsschool-first-task-bucket"
+  backend "s3" {
+    bucket  = "terraform-states-for-rs"
+    key     = "task_2.tfstate"
+    region  = "eu-west-1"
+    encrypt = true
+  }
 }
