@@ -1,4 +1,4 @@
-name: 'Terraform workflow for task 2'
+name: 'Terraform workflow'
 
 on:
   push:
@@ -40,6 +40,8 @@ jobs:
     defaults:
       run:
         shell: bash
+    env: 
+      TF_VAR_private_key_pem: ${{ secrets.TF_VAR_private_key_pem }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -63,8 +65,7 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: ./terraform
-    - name: set variable
-      run: export TF_VAR_private_key_pem=${{ secrets.TF_VAR_private_key_pem }}
+    
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
