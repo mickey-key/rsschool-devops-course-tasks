@@ -1,9 +1,10 @@
-name: 'Terraform Check Plan Apply for task 2'
+name: 'Terraform workflow'
 
 on:
   push:
     branches:
      - main
+     - task_2
   pull_request:
     branches:
      - main
@@ -39,6 +40,9 @@ jobs:
     defaults:
       run:
         shell: bash
+    env: 
+      TF_VAR_private_key_pem: ${{ secrets.TF_VAR_private_key_pem }}
+      TF_VAR_token_k3s: ${{ secrets.TF_VAR_token_k3s }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -62,7 +66,7 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: ./terraform
-      
+    
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
@@ -76,6 +80,9 @@ jobs:
     permissions:
       id-token: write   
       contents: read  
+    env: 
+      TF_VAR_private_key_pem: ${{ secrets.TF_VAR_private_key_pem }}
+      TF_VAR_token_k3s: ${{ secrets.TF_VAR_token_k3s }}
     steps:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
