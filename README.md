@@ -1,6 +1,8 @@
 # RSSchool AWS DevOps 2025Q2 Task 4: Task 4: Jenkins Installation and Configuration
 
+
 This repository contains jenkins configuration file for helm.
+
 Task details can be found here https://github.com/rolling-scopes-school/tasks/blob/master/devops/modules/3_ci-configuration/task_4.md
 
 
@@ -12,12 +14,19 @@ minikube is installed. How to install minicube: https://minikube.sigs.k8s.io/doc
 
 
 ├── helm_jenkins
+
 │   ├── jenkins_pvc.yaml - contains persistent volume claim for jenkins 
+
 │   ├── jenkins_sa.yaml  - creates service account for jenkins
+
 │   ├── jenkins_values_jcasc.yaml - values for Jenkins Configuration as Code
+
 │   ├── jenkins_values.yaml - values for configuring Helm charts for Jenkins deployment on Kubernetes
+
 │   └── jenkins_volume.yaml - to create Kubernetes persistent volume  named 'jenkins-pv'
+
 ├── README.md
+
 └──.gitignore - specifies intentionally untracked files that Git should ignore
 
 
@@ -69,8 +78,8 @@ https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins-with-helm
 ``` 
 minikube kubectl -- apply -f jenkins_volume.yaml 
 
-mkdir -p /tmp/jenkins-volume/
-chown -R 1000:1000 /tmp/jenkins-volume/
+mkdir -p /var/lib/jenkins/jenkins-volume/
+chown -R 1000:1000 /var/lib/jenkins/jenkins-volume/
 
 ```
 create a persisctent volumeclaim 
@@ -89,14 +98,15 @@ helm install jenkins -n jenkins -f jenkins_values.yaml $chart
 ```
 
 Additional info: 
-if it is needed to access to jenkins inside 
+If it is needed to access to jenkins inside, run
 ```
 minikube kubectl -- exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/bash
 ```
 
 #### 7. Update helm chart values to create job using JCasC
 
-the job is added to the file `jenkins_values_jcasc.yaml`
+the job is already added to the file `jenkins_values_jcasc.yaml`. 
+
 run helm update to apply changes
 ```
 helm upgrade jenkins -n jenkins -f jenkins_values_jcasc.yaml $chart
