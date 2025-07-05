@@ -8,7 +8,8 @@ Task details can be found here https://github.com/rolling-scopes-school/tasks/bl
 
 ## Prerequisities
 
-minikube is installed. How to install minicube: https://minikube.sigs.k8s.io/docs/start/
+minikube is installed. 
+How to install minikube: https://minikube.sigs.k8s.io/docs/start/
 
 ## Project file structure
 
