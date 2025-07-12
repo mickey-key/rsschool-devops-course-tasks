@@ -1,0 +1,7 @@
+replicacount: 1
+image:
+  repository: mickeykey/hello-flask-app
+  tag: "latest"
+  pullPolicy: IfNotPresent
+namespace: flask
+serviceport: 8080
