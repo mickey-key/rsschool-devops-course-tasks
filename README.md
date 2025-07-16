@@ -92,6 +92,29 @@ kubectl apply -f jenkins_sa.yaml
 chart=jenkinsci/jenkins
 helm install jenkins -n jenkins -f jenkins_values.yaml $chart
 ```
+to get jenkins url
+```
+minikube service jenkins -n jenkins
+```
+to get admin password:
+```
+jsonpath="{.data.jenkins-admin-password}"
+secret=$(kubectl get secret -n jenkins jenkins -o jsonpath=$jsonpath)
+echo $(echo $secret | base64 --decode)
+```
+
+Or alternatively 
+
+1. Get your 'admin' user password by running:
+```
+  kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
+```
+2. Get the Jenkins URL to visit by running these commands in the same shell:
+ ```
+ echo http://127.0.0.1:8080
+ kubectl --namespace jenkins port-forward svc/jenkins 8080:8080
+```
+
 
 Additional info: 
 
