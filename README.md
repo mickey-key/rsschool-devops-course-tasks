@@ -39,7 +39,6 @@ How to install minikube: https://minikube.sigs.k8s.io/docs/start/
 ```
 minikube start
 alias kubectl="minikube kubectl --"
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ```
 
 #### 2. Install helm using package manager,  details here https://helm.sh/
@@ -78,10 +77,6 @@ https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins-with-helm
 
 ``` 
 minikube kubectl -- apply -f jenkins_volume.yaml 
-
-mkdir -p /var/lib/jenkins/jenkins-volume/
-chown -R 1000:1000 /var/lib/jenkins/jenkins-volume/
-
 ```
 create a persisctent volumeclaim 
 
@@ -99,6 +94,22 @@ helm install jenkins -n jenkins -f jenkins_values.yaml $chart
 ```
 
 Additional info: 
+
+if pod does not start
+```
+kubectl logs jenkins-0 -c init -n jenkins
+/var/jenkins_config/apply_config.sh: 4: cannot create /var/jenkins_home/jenkins.install.UpgradeWizard.state: Permission denied
+disable Setup Wizard
+```
+
+it needs to change permissions for jenkins directory
+```
+minikube ssh
+mkdir -p /var/lib/jenkins/jenkins-volume/
+chown -R 1000:1000 /var/lib/jenkins/jenkins-volume/
+```
+
+
 If it is needed to access to jenkins inside, run
 ```
 minikube kubectl -- exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/bash
