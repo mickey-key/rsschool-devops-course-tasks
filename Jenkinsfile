@@ -9,12 +9,23 @@ pipeline {
       
      stage('Build image') { 
        steps { 
-         script{
+         script {
            app = docker.build("mickeykey/hello-flask-app:${env.BUILD_ID}","./flask_app")    
          }
        }
-     }     
- 
+     }
+    stage('Test image') { 
+       steps { 
+         script {
+           app.inside {
+             sh '''
+             echo "pass"
+             '''
+           }    
+         }
+       }
+    }
+   
     stage('Push image') {
       steps {
         script {
@@ -25,8 +36,17 @@ pipeline {
         }
       }
     }  
-  }
- 
+
+  stage('Test image') { 
+       steps { 
+         script {
+             sh '''
+             docker rmi mickeykey/hello-flask-app:${env.BUILD_ID}
+             '''
+         }
+       }
+    }
+  }  
   post {
     success {
       script {
