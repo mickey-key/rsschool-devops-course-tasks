@@ -1,0 +1,29 @@
+
+resource "aws_network_acl" "network_acl_public_subnet" {
+  vpc_id = aws_vpc.rs_course_vpc.id
+  ingress {
+    rule_no    = 100
+    action     = "allow"
+    protocol   = "-1"
+    from_port  = 0
+    to_port    = 0
+    cidr_block = "0.0.0.0/0"
+  }
+  egress {
+    rule_no    = 100
+    action     = "allow"
+    protocol   = "-1"
+    from_port  = 0
+    to_port    = 0
+    cidr_block = "0.0.0.0/0"
+  }
+
+}
+
+
+
+resource "aws_network_acl_association" "acl_associations_public_subnet" {
+  count          = length(aws_subnet.public_subnets)
+  subnet_id      = aws_subnet.public_subnets[count.index].id
+  network_acl_id = aws_network_acl.network_acl_public_subnet.id
+}
